@@ -861,7 +861,7 @@ class CallkitNotificationManager(
         val intentTransparent = TransparentActivity.getIntent(
             context, CallkitConstants.ACTION_CALL_CLICKED, data
         )
-        return PendingIntent.getBroadcast(context, id, intentTransparent, getFlagPendingIntent())
+        return PendingIntent.getActivity(context, id, intentTransparent, getFlagPendingIntent())
     }
 
 
