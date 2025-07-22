@@ -128,6 +128,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                         CallkitConstants.ACTION_CALL_ACCEPT,
                         data
                     )
+                    callkitNotificationManager?.clearIncomingNotification(data, true)
                     sendEventFlutter(CallkitConstants.ACTION_CALL_ACCEPT, data)
                     addCall(context, Data.fromBundle(data), true)
                 } catch (error: Exception) {
