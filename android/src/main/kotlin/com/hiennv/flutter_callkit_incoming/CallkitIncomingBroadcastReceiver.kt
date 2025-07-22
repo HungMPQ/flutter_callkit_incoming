@@ -162,7 +162,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                 try {
                     // clear notification and show miss notification
                     callkitNotificationManager?.clearIncomingNotification(data, false)
-                    callkitNotificationManager?.showMissCallNotification(data)
+                    //callkitNotificationManager?.showMissCallNotification(data)
                     sendEventFlutter(CallkitConstants.ACTION_CALL_TIMEOUT, data)
                     removeCall(context, Data.fromBundle(data))
                 } catch (error: Exception) {
@@ -173,7 +173,8 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
             "${context.packageName}.${CallkitConstants.ACTION_CALL_CONNECTED}" -> {
                 try {
                     // update notification on going connected
-                    callkitNotificationManager?.showOngoingCallNotification(data, true)
+                    //callkitNotificationManager?.showOngoingCallNotification(data, true)
+                    callkitNotificationManager?.clearIncomingNotification(data, true)
                     sendEventFlutter(CallkitConstants.ACTION_CALL_CONNECTED, data)
                 } catch (error: Exception) {
                     Log.e(TAG, null, error)
@@ -195,6 +196,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${CallkitConstants.ACTION_CALL_CLICKED}" -> {
                 try {
+                    callkitNotificationManager?.clearIncomingNotification(data, false)
                     sendEventFlutter(CallkitConstants.ACTION_CALL_CLICKED, data)
                 } catch (error: Exception) {
                     Log.e(TAG, null, error)
