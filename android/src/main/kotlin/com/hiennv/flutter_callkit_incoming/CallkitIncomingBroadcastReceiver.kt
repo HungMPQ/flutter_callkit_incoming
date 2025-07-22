@@ -79,6 +79,12 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                 action = "${context.packageName}.${CallkitConstants.ACTION_CALL_CONNECTED}"
                 putExtra(CallkitConstants.EXTRA_CALLKIT_INCOMING_DATA, data)
             }
+
+        fun getIntentClicked(context: Context, data: Bundle?) =
+            Intent(context, CallkitIncomingBroadcastReceiver::class.java).apply {
+                action = "${context.packageName}.${CallkitConstants.ACTION_CALL_CLICKED}"
+                putExtra(CallkitConstants.EXTRA_CALLKIT_INCOMING_DATA, data)
+            }
     }
 
     private val callkitNotificationManager: CallkitNotificationManager? = FlutterCallkitIncomingPlugin.getInstance()?.getCallkitNotificationManager()
@@ -182,6 +188,14 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                         val closeNotificationPanel = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
                         context.sendBroadcast(closeNotificationPanel)
                     }
+                } catch (error: Exception) {
+                    Log.e(TAG, null, error)
+                }
+            }
+
+            "${context.packageName}.${CallkitConstants.ACTION_CALL_CLICKED}" -> {
+                try {
+                    sendEventFlutter(CallkitConstants.ACTION_CALL_CLICKED, data)
                 } catch (error: Exception) {
                     Log.e(TAG, null, error)
                 }

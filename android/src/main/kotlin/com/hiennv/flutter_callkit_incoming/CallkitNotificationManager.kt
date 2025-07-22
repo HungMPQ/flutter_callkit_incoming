@@ -197,7 +197,7 @@ class CallkitNotificationManager(
         notificationBuilder?.setOnlyAlertOnce(true)
         notificationBuilder?.setSound(null)
         notificationBuilder?.setFullScreenIntent(
-            getActivityPendingIntent(notificationId, data), true
+            getClickedPendingIntent(notificationId, data), true
         )
         notificationBuilder?.setSmallIcon(R.drawable.ic_answer_transparent)
 
@@ -855,6 +855,11 @@ class CallkitNotificationManager(
         return PendingIntent.getBroadcast(
             context, notificationId, endedIntent, getFlagPendingIntent()
         )
+    }
+
+    private fun getClickedPendingIntent(id: Int, data: Bundle): PendingIntent {
+        val intent = CallkitIncomingBroadcastReceiver.getIntentClicked(context, data)
+        return PendingIntent.getBroadcast(context, id, intent, getFlagPendingIntent())
     }
 
 
