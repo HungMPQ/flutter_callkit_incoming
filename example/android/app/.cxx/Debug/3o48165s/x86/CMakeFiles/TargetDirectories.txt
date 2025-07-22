@@ -1,0 +1,2 @@
+/Users/quochung/flutter_callkit_incoming/example/android/app/.cxx/Debug/3o48165s/x86/CMakeFiles/edit_cache.dir
+/Users/quochung/flutter_callkit_incoming/example/android/app/.cxx/Debug/3o48165s/x86/CMakeFiles/rebuild_cache.dir
