@@ -858,8 +858,10 @@ class CallkitNotificationManager(
     }
 
     private fun getClickedPendingIntent(id: Int, data: Bundle): PendingIntent {
-        val intent = CallkitIncomingBroadcastReceiver.getIntentClicked(context, data)
-        return PendingIntent.getBroadcast(context, id, intent, getFlagPendingIntent())
+        val intentTransparent = TransparentActivity.getIntent(
+            context, CallkitConstants.ACTION_CALL_CLICKED, data
+        )
+        return PendingIntent.getBroadcast(context, id, intentTransparent, getFlagPendingIntent())
     }
 
 
