@@ -197,7 +197,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${CallkitConstants.ACTION_CALL_CLICKED}" -> {
                 try {
-                    callkitNotificationManager?.clearIncomingNotification(data, false)
+                    callkitNotificationManager?.clearIncomingNotification(data, true)
                     sendEventFlutter(CallkitConstants.ACTION_CALL_CLICKED, data)
                 } catch (error: Exception) {
                     Log.e(TAG, null, error)
