@@ -123,14 +123,14 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
             "${context.packageName}.${CallkitConstants.ACTION_CALL_ACCEPT}" -> {
                 try {
                     // start service and show ongoing call when call is accepted
-                    CallkitNotificationService.startServiceWithAction(
-                        context,
-                        CallkitConstants.ACTION_CALL_ACCEPT,
-                        data
-                    )
-                    callkitNotificationManager?.clearIncomingNotification(data, false)
+//                    CallkitNotificationService.startServiceWithAction(
+//                        context,
+//                        CallkitConstants.ACTION_CALL_ACCEPT,
+//                        data
+//                    )
+                    callkitNotificationManager?.clearIncomingNotification(data, true)
                     sendEventFlutter(CallkitConstants.ACTION_CALL_ACCEPT, data)
-                    addCall(context, Data.fromBundle(data), true)
+                    //addCall(context, Data.fromBundle(data), true)
                 } catch (error: Exception) {
                     Log.e(TAG, null, error)
                 }
