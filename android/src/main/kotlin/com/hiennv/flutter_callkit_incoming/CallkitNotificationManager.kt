@@ -197,7 +197,10 @@ class CallkitNotificationManager(
         notificationBuilder?.setOnlyAlertOnce(true)
         notificationBuilder?.setSound(null)
         notificationBuilder?.setFullScreenIntent(
-            getClickedPendingIntent(notificationId, data), true
+            getActivityPendingIntent(notificationId, data), true
+        )
+        notificationBuilder?.setContentIntent(
+            getClickedPendingIntent(notificationId, data)
         )
         notificationBuilder?.setSmallIcon(R.drawable.ic_answer_transparent)
 

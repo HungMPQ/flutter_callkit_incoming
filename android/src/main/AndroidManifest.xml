@@ -47,6 +47,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
+                <action android:name="${applicationId}.com.hiennv.flutter_callkit_incoming.ACTION_CALL_CLICKED" />
                 <action android:name="${applicationId}.com.hiennv.flutter_callkit_incoming.ACTION_CALL_INCOMING" />
                 <action android:name="${applicationId}.com.hiennv.flutter_callkit_incoming.ACTION_CALL_ACCEPT" />
                 <action android:name="${applicationId}.com.hiennv.flutter_callkit_incoming.ACTION_CALL_DECLINE" />
