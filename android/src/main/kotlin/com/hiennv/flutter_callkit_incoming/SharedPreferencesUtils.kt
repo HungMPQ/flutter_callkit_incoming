@@ -17,6 +17,7 @@ private fun initInstance(context: Context) {
 
 
 fun addCall(context: Context?, data: Data, isAccepted: Boolean = false) {
+    println("FlutterCallKitIncoming: addCall called with data: $data, isAccepted: $isAccepted")
     val json = getString(context, "ACTIVE_CALLS", "[]")
     val arrayData: ArrayList<Data> = Utils.getGsonInstance()
         .readValue(json, object : TypeReference<ArrayList<Data>>() {})
