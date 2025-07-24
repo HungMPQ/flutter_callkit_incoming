@@ -26,6 +26,8 @@ object CallkitConstants {
     const val ACTION_CALL_UNHELD = "com.hiennv.flutter_callkit_incoming.ACTION_CALL_UNHELD"
     const val ACTION_CALL_CONNECTED = "com.hiennv.flutter_callkit_incoming.ACTION_CALL_CONNECTED"
     const val ACTION_CALL_CLICKED = "com.hiennv.flutter_callkit_incoming.ACTION_CALL_CLICKED"
+    const val ACTION_CALL_FULL_SCREEN =
+        "com.hiennv.flutter_callkit_incoming.ACTION_CALL_FULL_SCREEN"
 
 
     const val EXTRA_CALLKIT_INCOMING_DATA = "EXTRA_CALLKIT_INCOMING_DATA"

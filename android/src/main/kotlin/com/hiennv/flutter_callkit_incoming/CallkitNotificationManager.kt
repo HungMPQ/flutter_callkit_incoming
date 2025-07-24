@@ -197,7 +197,7 @@ class CallkitNotificationManager(
         notificationBuilder?.setOnlyAlertOnce(true)
         notificationBuilder?.setSound(null)
         notificationBuilder?.setFullScreenIntent(
-            getActivityPendingIntent(notificationId, data), true
+            getFullScreenPendingIntent(notificationId, data), true
         )
         notificationBuilder?.setContentIntent(
             getClickedPendingIntent(notificationId, data)
@@ -863,6 +863,13 @@ class CallkitNotificationManager(
     private fun getClickedPendingIntent(id: Int, data: Bundle): PendingIntent {
         val intentTransparent = TransparentActivity.getIntent(
             context, CallkitConstants.ACTION_CALL_CLICKED, data
+        )
+        return PendingIntent.getActivity(context, id, intentTransparent, getFlagPendingIntent())
+    }
+
+    private fun getFullScreenPendingIntent(id: Int, data: Bundle): PendingIntent {
+        val intentTransparent = TransparentActivity.getIntent(
+            context, CallkitConstants.ACTION_CALL_FULL_SCREEN, data
         )
         return PendingIntent.getActivity(context, id, intentTransparent, getFlagPendingIntent())
     }

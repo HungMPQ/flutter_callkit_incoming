@@ -204,6 +204,14 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                     Log.e(TAG, null, error)
                 }
             }
+
+            "${context.packageName}.${CallkitConstants.ACTION_CALL_FULL_SCREEN}" -> {
+                try {
+                    sendEventFlutter(CallkitConstants.ACTION_CALL_FULL_SCREEN, data)
+                } catch (error: Exception) {
+                    Log.e(TAG, null, error)
+                }
+            }
         }
     }
 
