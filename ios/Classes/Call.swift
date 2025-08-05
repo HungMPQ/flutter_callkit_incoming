@@ -156,7 +156,7 @@ public class Call: NSObject {
     @objc public var audioSessionPreferredSampleRate: Double
     @objc public var audioSessionPreferredIOBufferDuration: Double
     
-    @objc public init(id: String, nameCaller: String, handle: String, type: Int) {
+    @objc public init(id: String, nameCaller: String, handle: String, type: Int, duration: Int = 30000, extra: NSDictionary = [:]) {
         self.uuid = id
         self.nameCaller = nameCaller
         self.appName = "Callkit"
@@ -164,9 +164,9 @@ public class Call: NSObject {
         self.avatar = ""
         self.type = type
         self.normalHandle = 0
-        self.duration = 30000
+        self.duration = duration
         self.isAccepted = false
-        self.extra = [:]
+        self.extra = extra
         self.iconName = "CallKitLogo"
         self.handleType = ""
         self.supportsVideo = true
