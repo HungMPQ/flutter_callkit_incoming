@@ -49,4 +49,43 @@ class CallKitParams {
       _$CallKitParamsFromJson(json);
 
   Map<String, dynamic> toJson() => _$CallKitParamsToJson(this);
+
+  CallKitParams copyWith({
+    String? id,
+    String? nameCaller,
+    String? appName,
+    String? avatar,
+    String? handle,
+    int? type,
+    int? normalHandle,
+    int? duration,
+    String? textAccept,
+    String? textDecline,
+    NotificationParams? missedCallNotification,
+    NotificationParams? callingNotification,
+    Map<String, dynamic>? extra,
+    Map<String, dynamic>? headers,
+    AndroidParams? android,
+    IOSParams? ios,
+  }) {
+    return CallKitParams(
+      id: id ?? this.id,
+      nameCaller: nameCaller ?? this.nameCaller,
+      appName: appName ?? this.appName,
+      avatar: avatar ?? this.avatar,
+      handle: handle ?? this.handle,
+      type: type ?? this.type,
+      normalHandle: normalHandle ?? this.normalHandle,
+      duration: duration ?? this.duration,
+      textAccept: textAccept ?? this.textAccept,
+      textDecline: textDecline ?? this.textDecline,
+      missedCallNotification:
+          missedCallNotification ?? this.missedCallNotification,
+      callingNotification: callingNotification ?? this.callingNotification,
+      extra: extra ?? this.extra,
+      headers: headers ?? this.headers,
+      android: android ?? this.android,
+      ios: ios ?? this.ios,
+    );
+  }
 }
