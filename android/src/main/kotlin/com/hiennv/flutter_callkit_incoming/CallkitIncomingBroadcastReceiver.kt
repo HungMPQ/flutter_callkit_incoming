@@ -150,6 +150,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${CallkitConstants.ACTION_CALL_ENDED}" -> {
                 try {
+
                     // clear notification and stop service
                     callkitNotificationManager?.clearIncomingNotification(data, false)
                     CallkitNotificationService.stopService(context)
@@ -162,9 +163,12 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${CallkitConstants.ACTION_CALL_TIMEOUT}" -> {
                 try {
-                    // clear notification and show miss notification
+                    Log.d(TAG, "Call timed out: $data")
+                    // clear notification, stop sound/vibration, and show miss notification
                     callkitNotificationManager?.clearIncomingNotification(data, false)
-                    //callkitNotificationManager?.showMissCallNotification(data)
+                    // Explicitly stop sound player to ensure sound/vibration stops
+                    FlutterCallkitIncomingPlugin.getInstance()?.getCallkitSoundPlayerManager()?.stop()
+                    callkitNotificationManager?.showMissCallNotification(data)
                     sendEventFlutter(CallkitConstants.ACTION_CALL_TIMEOUT, data)
                     removeCall(context, Data.fromBundle(data))
                 } catch (error: Exception) {
