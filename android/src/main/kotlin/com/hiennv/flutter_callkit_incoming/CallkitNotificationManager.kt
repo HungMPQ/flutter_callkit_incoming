@@ -3,6 +3,7 @@ package com.hiennv.flutter_callkit_incoming
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlarmManager
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -194,6 +195,11 @@ class CallkitNotificationManager(
                 CallkitConstants.EXTRA_CALLKIT_DURATION, 0L
             )
         )
+        // Set delete intent to handle notification timeout/dismissal
+        notificationBuilder?.setDeleteIntent(getTimeOutPendingIntent(notificationId, data))
+        
+        // Also schedule a backup timeout using AlarmManager for reliability
+        scheduleTimeoutAlarm(notificationId, data)
         notificationBuilder?.setOnlyAlertOnce(true)
         notificationBuilder?.setSound(null)
         notificationBuilder?.setFullScreenIntent(
@@ -724,6 +730,10 @@ class CallkitNotificationManager(
         val notificationId =
             data.getString(CallkitConstants.EXTRA_CALLKIT_ID, "callkit_incoming").hashCode()
         getNotificationManager().cancel(notificationId)
+        
+        // Cancel the backup timeout alarm since call is being cleared
+        cancelTimeoutAlarm(notificationId, data)
+        
         targetInComingAvatarDefault?.let {
             targetInComingAvatarDefault?.isCancelled = true
             targetInComingAvatarDefault = null
@@ -886,6 +896,33 @@ class CallkitNotificationManager(
 
     private fun getNotificationManager(): NotificationManagerCompat {
         return NotificationManagerCompat.from(context)
+    }
+
+    private fun scheduleTimeoutAlarm(notificationId: Int, data: Bundle) {
+        val duration = data.getLong(CallkitConstants.EXTRA_CALLKIT_DURATION, 0L)
+        if (duration <= 0) return
+
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val timeoutIntent = getTimeOutPendingIntent(notificationId, data)
+        
+        val triggerTime = System.currentTimeMillis() + duration
+        
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, timeoutIntent)
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, timeoutIntent)
+            }
+        } catch (e: Exception) {
+            // Fallback if exact alarm is not allowed
+            alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, timeoutIntent)
+        }
+    }
+
+    private fun cancelTimeoutAlarm(notificationId: Int, data: Bundle) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val timeoutIntent = getTimeOutPendingIntent(notificationId, data)
+        alarmManager.cancel(timeoutIntent)
     }
 
     @SuppressLint("MissingPermission")

@@ -259,6 +259,11 @@ class CallkitIncomingActivity : Activity() {
         val timeOut = duration - abs(currentSystemTime - timeStartCall)
         Handler(Looper.getMainLooper()).postDelayed({
             if (!isFinishing) {
+                // Send timeout broadcast before finishing the activity
+                data?.let {
+                    val timeoutIntent = CallkitIncomingBroadcastReceiver.getIntentTimeout(this@CallkitIncomingActivity, it)
+                    sendBroadcast(timeoutIntent)
+                }
                 finishTask()
             }
         }, timeOut)
